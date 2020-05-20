@@ -1,6 +1,25 @@
 #include QMK_KEYBOARD_H
 
 
+enum custom_keycodes {
+  PC_CODE = SAFE_RANGE,
+};
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t * record) {
+  switch (keycode) {
+    case PC_CODE:
+      if (record->event.pressed) {
+        // Stupid Skype and its stupid decision to not just use backticks for
+        // inline code samples.
+        SEND_STRING("{code}");
+      }
+      break;
+  }
+  return true;
+};
+
+
 enum layer_id {
     BL = 0,
     GL,
@@ -58,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ╟──────┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴┬───┴──────┼────╢
      * ║       │Left│Down│Rght│    │    │Prev│Play│Next│    │    │    │          │Vol+║
      * ╟───────┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─┬──┴─────┬────┼────╢
-     * ║         │    │    │    │    │    │    │    │    │    │    │        │Bl+ │Vol-║
+     * ║         │    │    │{cd}│    │    │    │    │    │    │    │        │Bl+ │Vol-║
      * ╟─────┬───┴─┬──┴──┬─┴────┴────┴────┴────┴────┴───┬┴───┬┴───┬┴───┬────┼────┼────╢
      * ║     │     │     │                              │    │    │    │Home│Bl- │End ║
      * ╚═════╧═════╧═════╧══════════════════════════════╧════╧════╧════╧════╧════╧════╝
@@ -67,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TG(GL),  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_PSCR,
         _______, _______, KC_UP,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______,          _______, KC_VOLU,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, BL_INC,  KC_VOLD,
+        _______,          _______, _______, PC_CODE, _______, _______, _______, _______, _______, _______, _______, _______, BL_INC,  KC_VOLD,
         _______, _______, _______,                            _______,                   _______, _______, _______, KC_HOME, BL_DEC,  KC_END
     ),
 };
