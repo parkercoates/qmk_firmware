@@ -105,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       backlight_config.enable = on;
       if (backlight_config.raw == 1) // enabled but level = 0
           backlight_config.level = 1;
-      eeconfig_update_backlight(backlight_config.raw);
+      eeconfig_update_backlight_current();
       // dprintf("backlight toggle: %u\n", backlight_config.enable);
       backlight_set(backlight_config.enable ? backlight_config.level : 0);
   }
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     bl_breath_on = false;
     backlight_config = bl_breath_backup;
-    eeconfig_update_backlight(backlight_config.raw);
+    eeconfig_update_backlight_current();
     backlight_set(backlight_config.enable ? backlight_config.level : 0);
   }
 

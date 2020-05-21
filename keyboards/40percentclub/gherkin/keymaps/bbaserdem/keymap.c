@@ -26,7 +26,7 @@ void matrix_init_user(void) {
     _delay_us(300);
     backlight_config.level = 2;
     backlight_config.enable = 1;
-    eeconfig_update_backlight(backlight_config.raw);
+    eeconfig_update_backlight_current();
     backlight_set(backlight_config.level);
     // Set RGB to rainbow mood light
     rgblight_enable();
