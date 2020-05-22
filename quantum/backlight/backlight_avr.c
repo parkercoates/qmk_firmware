@@ -224,22 +224,6 @@ ISR(TIMERx_OVF_vect) {
 
 #define TIMER_TOP 0xFFFFU
 
-// See http://jared.geek.nz/2013/feb/linear-led-pwm
-static uint16_t cie_lightness(uint16_t v) {
-    if (v <= 5243)     // if below 8% of max
-        return v / 9;  // same as dividing by 900%
-    else {
-        uint32_t y = (((uint32_t)v + 10486) << 8) / (10486 + 0xFFFFUL);  // add 16% of max and compare
-        // to get a useful result with integer division, we shift left in the expression above
-        // and revert what we've done again after squaring.
-        y = y * y * y >> 8;
-        if (y > 0xFFFFUL)  // prevent overflow
-            return 0xFFFFU;
-        else
-            return (uint16_t)y;
-    }
-}
-
 // range for val is [0..TIMER_TOP]. PWM pin is high while the timer count is below val.
 static inline void set_pwm(uint16_t val) { OCRxx = val; }
 
