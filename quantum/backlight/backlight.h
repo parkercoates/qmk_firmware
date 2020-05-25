@@ -69,6 +69,10 @@ void backlight_task(void);
 #    define BREATHING_CURVE 0
 #endif
 
+#ifndef BREATHING_DEPTH
+#    define BREATHING_DEPTH 1.0
+#endif
+
 void backlight_toggle_breathing(void);
 void backlight_enable_breathing(void);
 void backlight_disable_breathing(void);
