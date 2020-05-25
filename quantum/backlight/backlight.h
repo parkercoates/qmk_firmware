@@ -30,10 +30,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define BACKLIGHT_ON_STATE 1
 #endif
 
-#ifndef BREATHING_PERIOD
-#    define BREATHING_PERIOD 6
-#endif
-
 typedef union {
     uint8_t raw;
     struct {
@@ -63,6 +59,15 @@ void backlight_set(uint8_t level);
 void backlight_task(void);
 
 #ifdef BACKLIGHT_BREATHING
+
+
+#ifndef BREATHING_PERIOD
+#    define BREATHING_PERIOD 6
+#endif
+
+#ifndef BREATHING_CURVE
+#    define BREATHING_CURVE 0
+#endif
 
 void backlight_toggle_breathing(void);
 void backlight_enable_breathing(void);
